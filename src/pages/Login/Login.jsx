@@ -9,17 +9,20 @@ import { login } from "../../features/user/userSlice";
 
 import { LoginFormContainer } from "./styled";
 
-import { auth } from "../../utils/firebase";
+import { useNavigate } from "react-router-dom";
+import auth from "../../utils/firebase";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [credientals, setCredientals] = useState({
+    email: "",
+    password: "",
+  });
   const dispatch = useDispatch();
-  const auth = getAuth();
+  const navigate = useNavigate()
 
   const loginHandler = (e) => {
     e.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, credientals?.email, credientals?.password)
       .then((userAuth) => {
         dispatch(
           login({
@@ -27,11 +30,14 @@ const Login = () => {
             uid: userAuth.user.uid,
           })
         );
+        navigate('/')
       })
       .catch((err) => {
         alert(err);
       });
   };
+
+  console.log(credientals)
 
   return (
     <>
@@ -44,11 +50,17 @@ const Login = () => {
               <Label htmlFor="email1" value="Your email" />
             </div>
             <TextInput
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) =>
+                setCredientals({
+                  ...credientals,
+                  [e.target.name]: e.target.value,
+                })
+              }
               id="email1"
               type="email"
               placeholder="name@email.com"
               required={true}
+              name="email"
             />
           </div>
           <div>
@@ -56,10 +68,16 @@ const Login = () => {
               <Label htmlFor="password1" value="Your password" />
             </div>
             <TextInput
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) =>
+                setCredientals({
+                  ...credientals,
+                  [e.target.name]: e.target.value,
+                })
+              }
               id="password1"
               type="password"
               required={true}
+              name="password"
             />
           </div>
           <div className="flex items-center gap-2">
