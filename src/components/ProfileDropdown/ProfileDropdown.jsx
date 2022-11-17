@@ -1,18 +1,19 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { logout, selectUser } from "../../features/user/userSlice";
 import auth from "../../utils/firebase";
 import UserButtons from "../UserButtons/UserButtons";
 
 const ProfileDropdown = () => {
   const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const navigate = useNavigate()
   const signOutHandler = () => {
     dispatch(logout());
     auth.signOut();
+    navigate('/login')
   };
-
-  const user = useSelector(selectUser);
-
   return (
     <div className="flex md:order-2">
       <Navbar.Toggle className="mr-2" />
