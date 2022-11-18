@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import Heading from "../../components/Heading/Heading";
 import FooterMain from "../../containers/FooterMain/FooterMain";
 import NavbarMain from "../../containers/NavbarMain/NavbarMain";
 import { login } from "../../features/user/userSlice";
+import { errorAlert } from "../../helpers/toast";
 import auth from "../../utils/firebase";
 import { RegisterFormContainer } from "./styled";
 
@@ -32,10 +33,10 @@ const Register = () => {
       navigate('/')
     })
     .catch((err) => {
-      alert(err);
+      errorAlert(err);
     });
   }
-  console.log(credientals)
+  
   return (
     <>
       <NavbarMain />
@@ -91,7 +92,7 @@ const Register = () => {
             />
           </div>
           <div className="flex items-center gap-2">
-            <Checkbox id="agree" />
+            <Checkbox id="agree" required/>
             <Label htmlFor="agree">
               I agree with the{" "}
               <a
@@ -103,6 +104,7 @@ const Register = () => {
             </Label>
           </div>
           <Button type="submit">Register new account</Button>
+          
         </form>
       </RegisterFormContainer>
       <FooterMain />

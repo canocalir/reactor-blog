@@ -7,22 +7,27 @@ import auth from "../../utils/firebase";
 
 function App() {
   const dispatch = useDispatch();
-  useEffect(() => {
+
+  const stateChangeHandler = () => {
     onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
         dispatch(
           login({
-            email: userAuth.email,
-            uid: userAuth.uid,
+            email: userAuth?.email,
+            uid: userAuth?.uid,
           })
         );
       } else {
         dispatch(logout());
       }
     });
+  }
+
+  useEffect(() => {
+   stateChangeHandler()
   }, []);
   return (
-    <div className="App">
+    <div className="w-full">
       <AppRouter />
     </div>
   );

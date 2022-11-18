@@ -1,6 +1,7 @@
 import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import Gravatar from "react-gravatar";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { logout, selectUser } from "../../features/user/userSlice";
 import auth from "../../utils/firebase";
 import UserButtons from "../UserButtons/UserButtons";
@@ -15,18 +16,14 @@ const ProfileDropdown = () => {
     navigate('/login')
   };
   return (
-    <div className="flex md:order-2">
+    <div className="flex justify-end md:order-2 w-40">
       <Navbar.Toggle className="mr-2" />
       {user ? (
         <Dropdown
           arrowIcon={false}
           inline={true}
           label={
-            <Avatar
-              alt="User settings"
-              img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-              rounded={true}
-            />
+            <Gravatar style={{borderRadius: '50%'}} size={40} email={user?.email}/>
           }
         >
           <Dropdown.Header>
@@ -34,8 +31,15 @@ const ProfileDropdown = () => {
               {user?.email}
             </span>
           </Dropdown.Header>
+          <Link to={'/dashboard'}>
           <Dropdown.Item>Dashboard</Dropdown.Item>
+          </Link>
+          <Link to={'/profile'}>
           <Dropdown.Item>Profile</Dropdown.Item>
+          </Link>
+          <Link to={'/newpost'}>
+          <Dropdown.Item>New Post</Dropdown.Item>
+          </Link>
           <Dropdown.Divider />
           <Dropdown.Item onClick={signOutHandler}>Sign out</Dropdown.Item>
         </Dropdown>

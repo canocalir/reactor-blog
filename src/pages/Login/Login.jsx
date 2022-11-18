@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -10,7 +10,9 @@ import { login } from "../../features/user/userSlice";
 import { LoginFormContainer } from "./styled";
 
 import { useNavigate } from "react-router-dom";
-import auth from "../../utils/firebase";
+import auth, { provider } from "../../utils/firebase";
+import { GoogleLoginButton } from "react-social-login-buttons";
+import { errorAlert } from "../../helpers/toast";
 
 const Login = () => {
   const [credientals, setCredientals] = useState({
@@ -33,11 +35,25 @@ const Login = () => {
         navigate('/')
       })
       .catch((err) => {
-        alert(err);
+        errorAlert(err);
       });
   };
 
-  console.log(credientals)
+  const registerWithGoogle = () => {
+    signInWithPopup(auth, provider)
+    .then((userAuth) => {
+      dispatch(
+        login({
+          email: userAuth.user.email,
+          uid: userAuth.user.uid,
+        })
+      );
+      navigate('/')
+    })
+    .catch((err) => {
+      errorAlert(err);
+    });
+  }
 
   return (
     <>
@@ -85,6 +101,7 @@ const Login = () => {
             <Label htmlFor="remember">Remember me</Label>
           </div>
           <Button type="submit">Submit</Button>
+          <GoogleLoginButton onClick={registerWithGoogle} />
         </form>
       </LoginFormContainer>
       <FooterMain />
