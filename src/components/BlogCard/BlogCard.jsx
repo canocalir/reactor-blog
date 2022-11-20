@@ -14,7 +14,7 @@ const BlogCard = ({ post }) => {
 
   useEffect(() => {
    const getCount = () =>  setConfig({
-    url: "http://localhost:3000",
+    url: "https://gleaming-bunny-a87b8c.netlify.app/",
     identifier: post?.id,
     title: title
   })

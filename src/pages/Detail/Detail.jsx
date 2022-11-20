@@ -37,7 +37,7 @@ const Detail = () => {
   useEffect(() => {
     const getConfig = () => {
       setConfig({
-        url: "http://localhost:3000",
+        url: "https://gleaming-bunny-a87b8c.netlify.app/",
         identifier: id,
         title: title,
         language: "en_US",
