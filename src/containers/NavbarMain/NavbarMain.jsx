@@ -5,7 +5,7 @@ import ProfileDropdown from "../../components/ProfileDropdown/ProfileDropdown";
 
 const NavbarMain = () => {
   return (
-    <Navbar className="mt-5 flex" fluid={false} rounded={false}>
+    <Navbar className="flex w-full" fluid={false} rounded={false}>
       <LogoBrand />
       <ProfileDropdown />
       <Navbar.Collapse>

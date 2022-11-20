@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -12,7 +12,7 @@ import { LoginFormContainer } from "./styled";
 import { useNavigate } from "react-router-dom";
 import { auth, provider } from "../../utils/firebase";
 import { GoogleLoginButton } from "react-social-login-buttons";
-import { errorAlert } from "../../helpers/toast";
+import { errorToast, successToast } from "../../helpers/toast";
 
 const Login = () => {
   const [credientals, setCredientals] = useState({
@@ -33,9 +33,10 @@ const Login = () => {
           })
         );
         navigate('/')
+        successToast('Successfully Logged In')
       })
       .catch((err) => {
-        errorAlert(err);
+        errorToast(err.message);
       });
   };
 
@@ -51,7 +52,7 @@ const Login = () => {
       navigate('/')
     })
     .catch((err) => {
-      errorAlert(err);
+      errorToast(err.message);
     });
   }
 

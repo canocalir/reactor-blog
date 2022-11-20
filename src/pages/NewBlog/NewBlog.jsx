@@ -9,15 +9,18 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Heading from "../../components/Heading/Heading";
+import Loading from "../../components/Loading/Loading";
 import FooterMain from "../../containers/FooterMain/FooterMain";
 import NavbarMain from "../../containers/NavbarMain/NavbarMain";
-import { addPost, selectPost } from "../../features/post/postsSlice";
+import { addPost, reset, selectPost } from "../../features/post/postsSlice";
+import { selectUser } from "../../features/user/userSlice";
 import { storage, database } from "../../utils/firebase";
 import { NewBlogContainer } from "./styled";
 
 const NewBlog = () => {
   const dispatch = useDispatch();
   const posts = useSelector(selectPost);
+  const users = useSelector(selectUser);
   const navigate = useNavigate();
   const initialState = {
     id: "",
@@ -26,47 +29,48 @@ const NewBlog = () => {
     image: "",
   };
 
+
   const [file, setFile] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [post, setPost] = useState(initialState);
   const [percent, setPercent] = useState("");
-
-  const handleImageFirebaseUpload = () => {
-    
-    const storageRef = sRef(storage, `/images/${String(Math.random())}`);
-     uploadBytesResumable(storageRef, file)
-      .then((snapshot) => {
-        const percent = Math.round(
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-        );
-        getDownloadURL(snapshot.ref).then((downloadURL) => {
-          setImageURL(downloadURL);
-        });
-        setPercent(percent);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  const [loading, setLoading] = useState(true);
   
   useEffect(() => {
-    
     dispatch(
       addPost({
         id: new Date().getMilliseconds(),
+        created: new Date().toLocaleDateString('tr'),
+        author: users?.email,
         title: post?.title,
         content: post?.content,
         image: imageURL,
       })
     );
-  }, [post]);
+  }, [post, imageURL, file]);
 
   const handleImage = (e) => {
     setFile(e.target.files[0]);
-    
   };
 
   useEffect(() => {
+    const handleImageFirebaseUpload = () => {
+      const storageRef = sRef(storage, `/images/${String(Math.random())}`);
+       uploadBytesResumable(storageRef, file)
+        .then((snapshot) => {
+          const percent = Math.round(
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          );
+          getDownloadURL(snapshot.ref).then((downloadURL) => {
+            setImageURL(downloadURL);
+          });
+          setPercent(percent);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    file && post?.title ? setLoading(false) : setLoading(true)
     handleImageFirebaseUpload()
   },[post, file])
 
@@ -78,10 +82,9 @@ const NewBlog = () => {
     set(newPostRef, {
       posts,
     });
-    
     setTimeout(() => {
-      navigate("/dashboard");
-    },1000)
+      !loading && navigate("/dashboard");
+    },3000)
   };
   
   return (
@@ -90,7 +93,7 @@ const NewBlog = () => {
       <Heading headingText={"Create a Post"} />
       <NewBlogContainer>
         <form onSubmit={createPost}>
-          <div id="textarea" style={{ width: "500px" }}>
+          <div id="textarea" style={{ width: '20rem', maxWidth: "500px" }}>
             <div>
               <div className="mb-2 block">
                 <Label htmlFor="title" value="Post Title" />
@@ -143,11 +146,11 @@ const NewBlog = () => {
               rows={4}
             />
             <button
-              disabled={!file}
+              disabled={loading}
               type="submit"
-              className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 w-full mt-8"
+              className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-5 w-full mt-8"
             >
-              Create Post
+              {loading ? <p>Waiting For Change <Loading/></p> : 'Create Post'}
             </button>
           </div>
         </form>

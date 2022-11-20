@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { addPost, selectPost } from "../../features/post/postsSlice";
+import { successToast } from "../../helpers/toast";
 import { useFetch } from "../../hooks/useFetch";
 import { database, storage } from "../../utils/firebase";
 import Loading from "../Loading/Loading";
@@ -92,6 +93,7 @@ const EditModal = ({ setIsModalOpen, isModalOpen }) => {
     update(ref(database, "posts/"), updatedData);
     setTimeout(() => {
       !loading && navigate("/dashboard");
+      successToast('Successfully Edited')
     }, 3000);
   };
 

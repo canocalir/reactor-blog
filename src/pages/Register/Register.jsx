@@ -7,7 +7,7 @@ import Heading from "../../components/Heading/Heading";
 import FooterMain from "../../containers/FooterMain/FooterMain";
 import NavbarMain from "../../containers/NavbarMain/NavbarMain";
 import { login } from "../../features/user/userSlice";
-import { errorAlert } from "../../helpers/toast";
+import { errorToast, successToast } from "../../helpers/toast";
 import {auth} from "../../utils/firebase";
 import { RegisterFormContainer } from "./styled";
 
@@ -31,9 +31,10 @@ const Register = () => {
         })
       );
       navigate('/')
+      successToast('Successfully Registered')
     })
     .catch((err) => {
-      errorAlert(err);
+      errorToast(err.message);
     });
   }
   

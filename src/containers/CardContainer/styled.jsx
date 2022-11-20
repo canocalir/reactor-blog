@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 const CardsOuterContainer = styled.div`
   display:flex;
-  justify-content: space-around;
+  justify-content: center;
   flex-wrap: wrap;
-  gap: 3rem;
-  padding: 4rem;
+  gap: 2rem;
+  padding: 1rem;
   margin-bottom: 3rem;
 `;
 

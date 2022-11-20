@@ -26,8 +26,6 @@ const CardContainer = () => {
       },1000)
   }
 
-  console.log(loading)
-
   useEffect(() => {
     loadingHandler()
   },[dispatch])

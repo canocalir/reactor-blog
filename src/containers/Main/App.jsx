@@ -1,9 +1,11 @@
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { ToastContainer } from "react-toastify";
 import { login, logout } from "../../features/user/userSlice";
 import AppRouter from "../../router/AppRouter";
-import {auth} from "../../utils/firebase";
+import { auth } from "../../utils/firebase";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const dispatch = useDispatch();
@@ -21,15 +23,28 @@ function App() {
         dispatch(logout());
       }
     });
-  }
+  };
 
   useEffect(() => {
-   stateChangeHandler()
+    stateChangeHandler();
   }, []);
   return (
-    <div className="w-full">
+    <><ToastContainer
+    position="bottom-right"
+    autoClose={2000}
+    hideProgressBar={false}
+    newestOnTop={false}
+    closeOnClick
+    rtl={false}
+    pauseOnFocusLoss
+    draggable
+    pauseOnHover
+    theme="light"
+  />
+    <div className="w-full flex flex-col justify-between h-screen">
       <AppRouter />
     </div>
+    </>
   );
 }
 

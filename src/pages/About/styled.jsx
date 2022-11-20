@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-const LoginFormContainer = styled.div`
+const AboutPageContainer = styled.div`
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items:center;
 `
 
-export {LoginFormContainer}
+export {AboutPageContainer}
