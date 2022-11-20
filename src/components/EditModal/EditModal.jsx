@@ -14,6 +14,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { addPost, selectPost } from "../../features/post/postsSlice";
+import { selectUser } from "../../features/user/userSlice";
 import { successToast } from "../../helpers/toast";
 import { useFetch } from "../../hooks/useFetch";
 import { database, storage } from "../../utils/firebase";
@@ -22,6 +23,7 @@ import Loading from "../Loading/Loading";
 const EditModal = ({ setIsModalOpen, isModalOpen }) => {
   const dispatch = useDispatch();
   const posts = useSelector(selectPost);
+  const users = useSelector(selectUser);
   const navigate = useNavigate();
   const { postsList } = useFetch();
   const { id } = useParams();
@@ -29,7 +31,6 @@ const EditModal = ({ setIsModalOpen, isModalOpen }) => {
   const [post, setPost] = useState({});
   const [file, setFile] = useState("");
   const [imageURL, setImageURL] = useState("");
-  const [percent, setPercent] = useState("");
   const [loading, setLoading] = useState(true);
 
   const fetchDataOnload = () => {
@@ -38,13 +39,15 @@ const EditModal = ({ setIsModalOpen, isModalOpen }) => {
       title: singlePost[0]?.posts?.title,
       content: singlePost[0]?.posts?.content,
       image: singlePost[0]?.posts?.image,
+      author: singlePost[0]?.posts?.author,
+      created: singlePost[0]?.posts?.created
     });
   };
 
   useEffect(() => {
     setSinglePost(postsList.filter((post) => post.id === id));
     fetchDataOnload();
-  }, [isModalOpen, postsList]);
+  }, [isModalOpen, postsList]);// eslint-disable-line
 
   useEffect(() => {
     dispatch(
@@ -53,9 +56,11 @@ const EditModal = ({ setIsModalOpen, isModalOpen }) => {
         title: post?.title,
         content: post?.content,
         image: imageURL ? imageURL : singlePost[0]?.posts?.image,
+        created: new Date().toLocaleDateString('tr'),
+        author: users?.email,
       })
     );
-  }, [post, imageURL, file, singlePost]);
+  }, [post, imageURL, file, singlePost]);// eslint-disable-line
 
   useEffect(() => {
     const handleEditImage = () => {
@@ -68,7 +73,6 @@ const EditModal = ({ setIsModalOpen, isModalOpen }) => {
           const percent = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
           );
-          setPercent(percent);
           percent > 99 &&
             getDownloadURL(snapshot.ref).then((downloadURL) => {
               setImageURL(downloadURL);

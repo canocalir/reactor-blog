@@ -12,8 +12,9 @@ import Heading from "../../components/Heading/Heading";
 import Loading from "../../components/Loading/Loading";
 import FooterMain from "../../containers/FooterMain/FooterMain";
 import NavbarMain from "../../containers/NavbarMain/NavbarMain";
-import { addPost, reset, selectPost } from "../../features/post/postsSlice";
+import { addPost, selectPost } from "../../features/post/postsSlice";
 import { selectUser } from "../../features/user/userSlice";
+import { successToast } from "../../helpers/toast";
 import { storage, database } from "../../utils/firebase";
 import { NewBlogContainer } from "./styled";
 
@@ -33,7 +34,6 @@ const NewBlog = () => {
   const [file, setFile] = useState("");
   const [imageURL, setImageURL] = useState("");
   const [post, setPost] = useState(initialState);
-  const [percent, setPercent] = useState("");
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
@@ -47,7 +47,7 @@ const NewBlog = () => {
         image: imageURL,
       })
     );
-  }, [post, imageURL, file]);
+  }, [post, imageURL, file]);// eslint-disable-line
 
   const handleImage = (e) => {
     setFile(e.target.files[0]);
@@ -58,13 +58,9 @@ const NewBlog = () => {
       const storageRef = sRef(storage, `/images/${String(Math.random())}`);
        uploadBytesResumable(storageRef, file)
         .then((snapshot) => {
-          const percent = Math.round(
-            (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
           getDownloadURL(snapshot.ref).then((downloadURL) => {
             setImageURL(downloadURL);
           });
-          setPercent(percent);
         })
         .catch((err) => {
           console.log(err);
@@ -85,6 +81,7 @@ const NewBlog = () => {
     setTimeout(() => {
       !loading && navigate("/dashboard");
     },3000)
+    successToast('Successfuly Created')
   };
   
   return (

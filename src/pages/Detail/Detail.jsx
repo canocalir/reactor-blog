@@ -44,7 +44,7 @@ const Detail = () => {
       })
     }
     getConfig()
-  },[location])
+  },[location])// eslint-disable-line
 
   return (
     <>

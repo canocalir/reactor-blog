@@ -1,5 +1,5 @@
 import { Button } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { CardContainer, CardParagraph } from "./styled";
 import { CommentCount } from "disqus-react";
 import { FcSms } from "react-icons/fc";
@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 
 const BlogCard = ({ post }) => {
   const {
-    posts: { title, content, image, id, created, author },
+    posts: { title, content, image, created, author },
   } = post;
 
   const [config, setConfig] = useState({})
@@ -19,7 +19,7 @@ const BlogCard = ({ post }) => {
     title: title
   })
   getCount()
-  },[post])
+  },[post])// eslint-disable-line
 
   return (
     <div className="max-w-sm">
