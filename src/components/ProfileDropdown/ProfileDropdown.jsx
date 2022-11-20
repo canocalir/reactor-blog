@@ -1,9 +1,9 @@
-import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import { Dropdown, Navbar } from "flowbite-react";
 import Gravatar from "react-gravatar";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout, selectUser } from "../../features/user/userSlice";
-import auth from "../../utils/firebase";
+import {auth} from "../../utils/firebase";
 import UserButtons from "../UserButtons/UserButtons";
 
 const ProfileDropdown = () => {

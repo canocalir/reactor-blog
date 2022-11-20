@@ -4,10 +4,10 @@ import CardsOuterContainer from "./styled"
 const CardContainer = () => {
 
   const {postsList} = useFetch()
-  console.log(postsList)
+  
   return (
     <CardsOuterContainer>
-    {postsList.map((post) => (
+    {postsList?.map((post) => (
       <div className="w-80" key={post?.id}>
       <BlogCard post={post}/>
       </div>

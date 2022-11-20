@@ -8,7 +8,7 @@ import FooterMain from "../../containers/FooterMain/FooterMain";
 import NavbarMain from "../../containers/NavbarMain/NavbarMain";
 import { login } from "../../features/user/userSlice";
 import { errorAlert } from "../../helpers/toast";
-import auth from "../../utils/firebase";
+import {auth} from "../../utils/firebase";
 import { RegisterFormContainer } from "./styled";
 
 const Register = () => {

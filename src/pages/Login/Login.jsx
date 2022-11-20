@@ -10,7 +10,7 @@ import { login } from "../../features/user/userSlice";
 import { LoginFormContainer } from "./styled";
 
 import { useNavigate } from "react-router-dom";
-import auth, { provider } from "../../utils/firebase";
+import { auth, provider } from "../../utils/firebase";
 import { GoogleLoginButton } from "react-social-login-buttons";
 import { errorAlert } from "../../helpers/toast";
 

@@ -4,7 +4,7 @@ const postsSlice = createSlice({
   name: "posts",
   initialState: {
     loading: true,
-    posts: null,
+    posts: [],
   },
   reducers: {
     addPost: (state, action) => {

@@ -1,4 +1,3 @@
-import { Footer } from "flowbite-react";
 import { Link } from "react-router-dom";
 
 const FooterMain = () => {

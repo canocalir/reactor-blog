@@ -1,20 +1,30 @@
-import { Card } from "flowbite-react";
+import { Button, Card } from "flowbite-react";
+import { Link } from "react-router-dom";
+import { CardContainer, CardParagraph } from "./styled";
 
-const BlogCard = () => {
+const BlogCard = ({ post }) => {
+  const {
+    posts: { title, content, image },
+  } = post;
+  
   return (
     <div className="max-w-sm">
-      <Card
-        imgAlt="Meaningful alt text for an image that is not purely decorative"
-        imgSrc="https://flowbite.com/docs/images/blog/image-1.jpg"
+      <CardContainer
+        imgAlt="blogImage"
+        imgSrc={image}
       >
         <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-          Noteworthy technology acquisitions 2021
+          {title}
         </h5>
-        <p className="font-normal text-gray-700 dark:text-gray-400">
-          Here are the biggest enterprise technology acquisitions of 2021 so
-          far, in reverse chronological order.
-        </p>
-      </Card>
+        <CardParagraph className="font-normal text-gray-700 dark:text-gray-400">
+          {content}
+        </CardParagraph>
+        <div>
+          <Link state={{data: post}} to={`/details/${post?.id}`}>
+            <Button>Read More</Button>
+          </Link>
+        </div>
+      </CardContainer>
     </div>
   );
 };

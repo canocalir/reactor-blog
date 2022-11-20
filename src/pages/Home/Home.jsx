@@ -8,7 +8,7 @@ const Home = () => {
   return (
     <>
         <NavbarMain/>
-        <Heading headingText={'Dashboard'}/>
+        <Heading headingText={'Reactor News'}/>
         <CardContainer/>
         <FooterMain/>
     </>
