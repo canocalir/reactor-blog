@@ -50,6 +50,7 @@ const Login = () => {
         })
       );
       navigate('/')
+      successToast('Successfully Logged In')
     })
     .catch((err) => {
       errorToast(err.message);

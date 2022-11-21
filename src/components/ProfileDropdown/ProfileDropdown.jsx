@@ -3,6 +3,7 @@ import Gravatar from "react-gravatar";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout, selectUser } from "../../features/user/userSlice";
+import { successToast } from "../../helpers/toast";
 import {auth} from "../../utils/firebase";
 import UserButtons from "../UserButtons/UserButtons";
 
@@ -14,6 +15,7 @@ const ProfileDropdown = () => {
     dispatch(logout());
     auth.signOut();
     navigate('/login')
+    successToast('Successfully Logged Out')
   };
   return (
     <div className="flex justify-end md:order-2 w-40">

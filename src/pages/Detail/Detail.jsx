@@ -1,7 +1,7 @@
 import { DiscussionEmbed } from "disqus-react";
 import { ref, remove } from "firebase/database";
 import { Button } from "flowbite-react";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import EditModal from "../../components/EditModal/EditModal";
@@ -16,7 +16,6 @@ import { BlogImage } from "./styled";
 
 const Detail = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [config, setConfig] = useState({})
   const location = useLocation();
   const navigate = useNavigate();
   const user = useSelector(selectUser)
@@ -28,23 +27,19 @@ const Detail = () => {
       },
     },
   } = location;
+
   const removePostHandler = () => {
     remove(ref(database, "posts/" + id));
     navigate("/");
     successToast('Successfully Removed')
   };
 
-  useEffect(() => {
-    const getConfig = () => {
-      setConfig({
-        url: "https://gleaming-bunny-a87b8c.netlify.app/",
-        identifier: id,
-        title: title,
-        language: "en_US",
-      })
-    }
-    getConfig()
-  },[location])// eslint-disable-line
+  const disqusConfig = {
+    url: "https://gleaming-bunny-a87b8c.netlify.app/",
+    identifier: id,
+    title: title,
+    language: "en_US",
+  }
 
   return (
     <>
@@ -80,7 +75,7 @@ const Detail = () => {
       <div className="mr-20 ml-20">
       <DiscussionEmbed
         shortname="reactorblog-1"
-        config={config}
+        config={disqusConfig}
       />
       </div>
       <FooterMain />
