@@ -17,7 +17,7 @@ const BlogCard = ({ post }) => {
   const fullURL = `emailto:${author}?subject=sharing link\n&body=I am sharing a link:${disqusConfig?.url}details/${post?.id}}`;
   return (
     <div className="max-w-sm relative">
-      <div className="flex items-center absolute right-0">
+      <div className="flex items-center absolute right-0 top-2">
         <span className="gap-1 flex items-center bg-blue-100 text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-3">
           <FcSms />
           <CommentCount shortname="reactorblog-1" config={disqusConfig}>
