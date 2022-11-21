@@ -12,9 +12,7 @@
 ## [Click here for live demo](https://gleaming-bunny-a87b8c.netlify.app/)
 
 
-
-https://user-images.githubusercontent.com/11324886/202944735-b2998fee-d942-4535-b5e4-670de3b5589a.mp4
-
+![reactorblog](https://user-images.githubusercontent.com/11324886/202946243-d5904c7d-bc90-446c-88b2-de846515805b.gif)
 
 
 ## License
