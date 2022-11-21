@@ -12,7 +12,8 @@
 ## [Click here for live demo](https://gleaming-bunny-a87b8c.netlify.app/)
 
 
-![reactorblog](https://user-images.githubusercontent.com/11324886/202946243-d5904c7d-bc90-446c-88b2-de846515805b.gif)
+![reactorblog](https://user-images.githubusercontent.com/11324886/202948194-cd867a9d-aa44-4da3-9312-5859f2a84049.gif)
+
 
 
 ## License
